@@ -13,6 +13,10 @@ body {
 	height:100%,*/
 }
 
+.navbar-brand {
+  color: white;
+}
+
 .jumbotron {
 	background: none;
 	color: #fff;
@@ -31,13 +35,9 @@ body {
 	padding-right: 100px;	
 }
 
-span {
+input {
 	width: 300px;
 }
-/*.jumbotron p {
-	color: #fff;
-	text-align: left;
-	margin-left: 30%;
-	font-weight: 500;
-	font-size: 30px;
-}*/
+
+/* CSS for gameInfo.html */
+
