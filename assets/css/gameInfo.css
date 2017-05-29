@@ -13,6 +13,23 @@ body {
 	height:100%,*/
 }
 
-.navbar-brand {
-  color: white;
+#gameInfo {
+  background-color: #eeeeee
+}
+
+.media-heading {
+  background-color: #eeeeee
+}
+
+.page-header, p {
+  background-color: #eeeeee
+}
+
+.table{
+  background-color: #eeeeee;
+
+}
+
+.btn {
+  float: right;
 }
