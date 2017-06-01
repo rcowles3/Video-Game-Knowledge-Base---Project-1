@@ -3,46 +3,51 @@
 // On page load
 $(document).ready(function() {
 
-// FUNCTIONS 
-// ===============================================
+            console.log('Hi I am loaded');
 
-	// Function to handle click event on form submission for game search
-	$('#gameSearchBtn').click(function(event) {
+            // FUNCTIONS 
+            // ===============================================            
 
-		// Prevents the form from automatically running on its own
-		event.preventDefault();
+            // Function to handle click event off game searched
+            $('#gameSearchBtn').click(function() {
 
-		// Grabs input from game search
-		var gameSearch = $('#gameSearch').val().trim();
+            	$('#gameSearchBtn').css("display", "none");
+            	$('#gameSearch').css("display", "none");
 
-		// Log to test button click
-		console.log(gameSearch);
-		
-	})
+                // API Key
+                var apikey = "4aa71062a0badcab727772a041b2d0acf478a829";
 
-// Function to handle click event off game searched
-	$('button').click(function() {
+                // Base URL
+                var baseUrl = "http://www.giantbomb.com/api";
 
-		// In this case, the "this" keyword refers to the button that was clicked
-		var game = $(this).attr("data-name");
+                // Construct ajax url
+                var GamesSearchUrl = baseUrl + '/search/?api_key=' + apikey + '&format=jsonp';
 
-		// Constructing a URL to search Giantbomb for the game searched
-		var queryURL = "https://www.giantbomb.com/api/search/?api_key=4aa71062a0badcab727772a041b2d0acf478a829&format=jsonp&json_callback=success&query=" + game + "&resources=game";
-		
-		// Perform AJAX GET req
-		$.ajax({
-			url: queryURL,
-			method: "GET",
-			
+                // Log to test URL
+                console.log("GamesSearchUrl", GamesSearchUrl);
 
-		})
-		.done(function(response) {
-			var results = response.data;
+                // Grabs input from game search
+                var gameSearch = $('#gameSearch').val().trim();
 
-			console.log("Game: " + game);
-			console.log(response);
-		})
-	})
+                // var query = game;
+                console.log(gameSearch);
 
+                // send off the query
+                $.ajax({
+                	method: 'GET',
+                	dataType: 'jsonp',
+                	// crossDomain: true,
+                	jsonp: 'json_callback',
+                    url: GamesSearchUrl + '&query=' + gameSearch + '&resources=game&limit=1'
+                })
+                .done(function(data) {
+                	console.log(data);
+                	console.log(data.results[0].name);
+                	console.log(data.results[0].deck);
+                	console.log(data.results[0].site_detail_url);
+                	// console.log(data.results[0].description);
+                	$('#gameInfo').html(data.results[0].deck);
 
+                });
+            });
 });
