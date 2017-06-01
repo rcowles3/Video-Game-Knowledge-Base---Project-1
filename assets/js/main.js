@@ -1,7 +1,5 @@
 // Javascript to handle logic
 
-
-
 // On page load
 $(document).ready(function() {
 
@@ -29,12 +27,14 @@ $(document).ready(function() {
 		var game = $(this).attr("data-name");
 
 		// Constructing a URL to search Giantbomb for the game searched
-		var queryURL = "https://www.giantbomb.com/api/search/?api_key=4aa71062a0badcab727772a041b2d0acf478a829&format=json&query=" + game + "&resources=game";
+		var queryURL = "https://www.giantbomb.com/api/search/?api_key=4aa71062a0badcab727772a041b2d0acf478a829&format=jsonp&json_callback=success&query=" + game + "&resources=game";
 		
 		// Perform AJAX GET req
 		$.ajax({
 			url: queryURL,
-			method: "GET"
+			method: "GET",
+			
+
 		})
 		.done(function(response) {
 			var results = response.data;
