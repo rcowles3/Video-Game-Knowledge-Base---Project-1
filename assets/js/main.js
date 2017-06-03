@@ -6,8 +6,8 @@ $(document).ready(function() {
     // Log to test JS is working
     // console.log('Hi I am loaded');
 
-    // FUNCTIONS 
-    // ===============================================            
+    // // FUNCTIONS 
+    // // ===============================================            
 
     // Function that runs Giant Bomb API logic
     function callGiantBombApi() {
@@ -93,16 +93,9 @@ $(document).ready(function() {
                 $('#gameTitle').html("<class='panel panel-default panel-heading'>" + objTitle);
 
                 // If else statment to check whether game rating is available for searched game
-                // if (noRating.length < 1){
 
-                // 	console.log("Rating not available.");
-                // }               
-                // else {
-
-                // // Manipulate rating to DOM
-                // $('#gameRating').html("Rating: " + convertedRating);
-
-                // }
+                // Manipulate rating to DOM
+                $('#gameRating').html("Rating: " + convertedRating);
 
                 // Manipulate brief description to DOM
                 $('#briefDesc').html(briefDesc);
@@ -114,7 +107,7 @@ $(document).ready(function() {
                 $('#giantBombLink').append(giantBombLink);
 
             });
-    }
+    };
 
     function youTubeApi() {
 
@@ -148,24 +141,24 @@ $(document).ready(function() {
     };
 
 
-// Function to handle click event off game searched
-$('#gameSearchBtn').click(function() {
+    // Function to handle click event off game searched
+    $('#gameSearchBtn').click(function() {
 
-    // Hide on load content, on click
-    // Hide index title
-    $('#siteTitle').css("display", "none");
-    // Hide search button
-    $('#gameSearchBtn').css("display", "none");
-    // Hide search input
-    $('#gameSearch').css("display", "none");
+        // Hide on load content, on click
+        // Hide index title
+        $('#siteTitle').css("display", "none");
+        // Hide search button
+        $('#gameSearchBtn').css("display", "none");
+        // Hide search input
+        $('#gameSearch').css("display", "none");
 
-    // Call to Giant Bomb API
-    callGiantBombApi();
+        // Call to Giant Bomb API
+        callGiantBombApi();
 
-    // Call to YouTube API
-    youTubeApi();
-    // Call to Spotify API
+        // Call to YouTube API
+        youTubeApi();
+        // Call to Spotify API
 
-    // Create user form and append reveiws
-});
+        // Create user form and append reveiws
+    });
 });
