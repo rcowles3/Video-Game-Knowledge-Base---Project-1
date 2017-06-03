@@ -58,7 +58,7 @@ $(document).ready(function() {
                 // Variable for no game ratings
                 var noRating = data.results[0].original_game_rating;
 
-                // console.log(data.results[0].original_game_rating);
+                console.log(data.results[0].original_game_rating);
 
                 var convertedRating = rating.slice(5, 7);
 
@@ -77,7 +77,7 @@ $(document).ready(function() {
                 // Link back to Giant Bomb page URL
                 var giantBombUrl = data.results[0].site_detail_url;
 
-                // console.log(giantBombUrl);
+                console.log(giantBombUrl);
 
                 var giantBombLink = $('<a>').attr('href', giantBombUrl).text("Link Back To GiantBomb.com");
 
