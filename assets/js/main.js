@@ -55,7 +55,12 @@ $(document).ready(function() {
                 // Variable to get game rating
                 var rating = data.results[0].original_game_rating[0].name;
 
-                var convertedRating = rating.slice(5,7);
+                // Variable for no game ratings
+                var noRating = data.results[0].original_game_rating;
+
+                // console.log(data.results[0].original_game_rating);
+
+                var convertedRating = rating.slice(5, 7);
 
                 // Variable to add image source
                 var image = $("<img class='text-center panel panel-default'>").attr("src", imageURL);
@@ -72,7 +77,7 @@ $(document).ready(function() {
                 // Link back to Giant Bomb page URL
                 var giantBombUrl = data.results[0].site_detail_url;
 
-                console.log(giantBombUrl);
+                // console.log(giantBombUrl);
 
                 var giantBombLink = $('<a>').attr('href', giantBombUrl).text("Link Back To GiantBomb.com");
 
@@ -87,8 +92,17 @@ $(document).ready(function() {
                 // Manipulate title to DOM
                 $('#gameTitle').html("<class='panel panel-default panel-heading'>" + objTitle);
 
-                // Manipulate rating to DOM
-                $('#gameRating').html("Rating: " + convertedRating);
+                // If else statment to check whether game rating is available for searched game
+                // if (noRating.length < 1){
+
+                // 	console.log("Rating not available.");
+                // }               
+                // else {
+
+                // // Manipulate rating to DOM
+                // $('#gameRating').html("Rating: " + convertedRating);
+
+                // }
 
                 // Manipulate brief description to DOM
                 $('#briefDesc').html(briefDesc);
@@ -102,24 +116,56 @@ $(document).ready(function() {
             });
     }
 
-    // Function to handle click event off game searched
-    $('#gameSearchBtn').click(function() {
+    function youTubeApi() {
 
-        // Hide on load content, on click
-        // Hide index title
-        $('#siteTitle').css("display", "none");
-        // Hide search button
-        $('#gameSearchBtn').css("display", "none");
-        // Hide search input
-        $('#gameSearch').css("display", "none");
+        console.log(this)
+        var videos = $('#gameSearch').val().trim();
+        // console.log(videos);
 
-        // Call to Giant Bomb API
-        callGiantBombApi();
+        var queryURL = "https://www.googleapis.com/youtube/v3/videos?key=AIzaSyD_owzmaKsqcncuux1E5mbgvPk3y7WrZF0&fields=items&part=snippet";
 
-        // Call to YouTube API
+        var apiInfo = {
+            id: '7lCDEYXw3mM',
+            regionCode: 'US',
+            part: 'snippet,contentDetails,statistics',
+            videoCategoryId: '20',
+            type: 'video',
+            q: videos,
+            maxResults: 3
+        };
 
-        // Call to Spotify API
+        $.ajax({
+                url: queryURL,
+                method: "GET",
+                data: apiInfo,
+                dataType: 'jsonp'
+            })
+            .done(function(response) {
+                // console.log(response);
+                var results = response.data;
+                // $('#youTube')
+            })
+    };
 
-        // Create user form and append reveiws
-    });
+
+// Function to handle click event off game searched
+$('#gameSearchBtn').click(function() {
+
+    // Hide on load content, on click
+    // Hide index title
+    $('#siteTitle').css("display", "none");
+    // Hide search button
+    $('#gameSearchBtn').css("display", "none");
+    // Hide search input
+    $('#gameSearch').css("display", "none");
+
+    // Call to Giant Bomb API
+    callGiantBombApi();
+
+    // Call to YouTube API
+    youTubeApi();
+    // Call to Spotify API
+
+    // Create user form and append reveiws
+});
 });
