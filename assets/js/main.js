@@ -6,20 +6,6 @@ $(document).ready(function() {
     // Log to test JS is working
     // console.log('Hi I am loaded');
 
-    // // Initialize Firebase
-    // var config = {
-    //     apiKey: "AIzaSyAx1a2HO0Q7v7yk4JFHOVVLwNs8Pu6O8z0",
-    //     authDomain: "video-game-search-project.firebaseapp.com",
-    //     databaseURL: "https://video-game-search-project.firebaseio.com",
-    //     // projectId: "video-game-search-project",
-    //     storageBucket: "video-game-search-project.appspot.com",
-    //     // messagingSenderId: "299555008620"
-    // };
-    // firebase.initializeApp(config);
-
-    // // Variable to reference firebase DB.
-    // var database = firebase.database();
-
     // // FUNCTIONS 
     // // ===============================================            
 
@@ -43,6 +29,8 @@ $(document).ready(function() {
 
         // Grabs input from game search
         var gameSearch = $('#gameSearch').val().trim();
+        
+        // If else to check if game is valid
 
         // var query = game;
         // console.log(gameSearch);
@@ -130,6 +118,7 @@ $(document).ready(function() {
             });
     };
 
+    // Function that run YouTube API logic
     function youTubeApi() {
 
         // Variable to retrieve search input
@@ -184,15 +173,18 @@ $(document).ready(function() {
 
         // Radio buttons to rate app
         $('#userInput').append("<label for='appRating'><h3>Rating: </h3></label>");
-        $('#userInput').append("<div><label class='radio-inline'><input type='radio' name='appRating' id='1star' value='1' required=''> 1 </label>" +
-            "<label class='radio-inline'><input type='radio' name='appRating' id='1star' value='1' required=''> 2 </label>" +
-            "<label class='radio-inline'><input type='radio' name='appRating' id='1star' value='1' required=''> 3 </label>" +
-            "<label class='radio-inline'><input type='radio' name='appRating' id='1star' value='1' required=''> 4 </label>" +
-            "<label class='radio-inline'><input type='radio' name='appRating' id='1star' value='1' required=''> 5 </label></div>");
+        $('#userInput').append("<div><label class='radio-inline reviewerRating'><input type='radio' name='appRating' value='1' required=''> 1 </label>" +
+            "<label class='radio-inline reviewerRating'><input type='radio' name='appRating' value='2' required=''> 2 </label>" +
+            "<label class='radio-inline reviewerRating'><input type='radio' name='appRating' value='3' required=''> 3 </label>" +
+            "<label class='radio-inline reviewerRating'><input type='radio' name='appRating' value='4' required=''> 4 </label>" +
+            "<label class='radio-inline reviewerRating'><input type='radio' name='appRating' value='5' required=''> 5 </label></div>");
 
         // Submit button
-        $('#userInput').append("<div><button type='submit' class='btn btn-default'>Submit</button></div></form>");
+        $('#userInput').append("<div><button id='userSubmit' type='submit' class='btn btn-default'>Submit</button></div>");
     }
+
+    // FUNCTIONS TO HANDLE CLICK EVENTS
+    // ===============================================  
 
     // Function to handle click event off game searched
     $('#gameSearchBtn').click(function() {
@@ -217,4 +209,48 @@ $(document).ready(function() {
         // Call to create form on submission
         userReviews();
     });
+
+    // Function to initialize and send reviews to Firebase
+    $('button').click(function() {
+
+    	// Testing click submission
+    	console.log("testing click function");
+    	
+    	// Method to prevent form from running on its own
+        // event.preventDefault();
+
+        // // Initialize Firebase
+        // var config = {
+        //     apiKey: "AIzaSyAx1a2HO0Q7v7yk4JFHOVVLwNs8Pu6O8z0",
+        //     authDomain: "video-game-search-project.firebaseapp.com",
+        //     databaseURL: "https://video-game-search-project.firebaseio.com",
+        //     // projectId: "video-game-search-project",
+        //     storageBucket: "video-game-search-project.appspot.com",
+        //     // messagingSenderId: "299555008620"
+        // };
+        // firebase.initializeApp(config);
+
+        // // Variable to reference firebase DB.
+        // var database = firebase.database();
+
+        // // Get input values from from
+        // reviewerName = $('#reviewerName').val().trim();
+        // reviewerComments = $('#reviewerComments').val().trim();
+        // reviewerRating = $('#reviewerRating').val().trim();
+
+        // // Log to check if input is retrieved properly
+        // console.log(reviewerName, reviewerComments, reviewerRating);
+
+        // // Push input data to firebase 
+        // database.ref().push({
+        //     reviewerName: reviewerName,
+        //     reviewerComments: reviewerComments,
+        //     reviewerRating,
+        //     reviewerRating
+        // });
+
+        // // Reset form after submit
+        // $('#userInput').get(0).reset();
+    });
+
 });
