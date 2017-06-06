@@ -6,6 +6,20 @@ $(document).ready(function() {
     // Log to test JS is working
     // console.log('Hi I am loaded');
 
+    // Initialize Firebase
+    var config = {
+        apiKey: "AIzaSyAx1a2HO0Q7v7yk4JFHOVVLwNs8Pu6O8z0",
+        authDomain: "video-game-search-project.firebaseapp.com",
+        databaseURL: "https://video-game-search-project.firebaseio.com",
+        // projectId: "video-game-search-project",
+        storageBucket: "video-game-search-project.appspot.com",
+        // messagingSenderId: "299555008620"
+    };
+    firebase.initializeApp(config);
+
+    // Variable to reference firebase DB.
+    var database = firebase.database();
+
     // // FUNCTIONS 
     // // ===============================================            
 
@@ -116,37 +130,7 @@ $(document).ready(function() {
             });
     };
 
-    function youTubeApi() {
-
-        console.log(this)
-        var videos = $('#gameSearch').val().trim();
-        // console.log(videos);
-
-        var queryURL = "https://www.googleapis.com/youtube/v3/videos?key=AIzaSyD_owzmaKsqcncuux1E5mbgvPk3y7WrZF0&fields=items&part=snippet";
-
-        var apiInfo = {
-            id: '7lCDEYXw3mM',
-            regionCode: 'US',
-            part: 'snippet,contentDetails,statistics',
-            videoCategoryId: '20',
-            type: 'video',
-            q: videos,
-            maxResults: 3
-        };
-
-        $.ajax({
-                url: queryURL,
-                method: "GET",
-                data: apiInfo,
-                dataType: 'jsonp'
-            })
-            .done(function(response) {
-                // console.log(response);
-                var results = response.data;
-                // $('#youTube')
-            })
-    };
-
+ 
 
     // Function to create user input form
     function userReviews() {
