@@ -29,7 +29,7 @@ $(document).ready(function() {
 
         // Grabs input from game search
         var gameSearch = $('#gameSearch').val().trim();
-        
+
         // If else to check if game is valid
 
         // var query = game;
@@ -121,17 +121,24 @@ $(document).ready(function() {
     // Function that run YouTube API logic
     function youTubeApi() {
 
-        
+        // Variable to retrieve search input
         var videos = $('#gameSearch').val().trim();
-        // console.log(videos);
+
+        // console.log(videos); // Log to make sure correct
+
+        // Variable for baseUrl
         var baseURL = "https://www.googleapis.com/youtube/v3/";
-        
+
+        // Variable for API Key
         var apiKey = "AIzaSyD_owzmaKsqcncuux1E5mbgvPk3y7WrZF0";
 
+        // Video Search queryURL
         var videoSearch = baseURL + "search?&q=" + videos + "&part=snippet&chart=mostPopular&videoCategoryId=20&type=video&maxResults=4&key=" + apiKey;
-        //video search parameters based of youtube api
-        console.log(videoSearch);
 
+
+        console.log(videoSearch); // Double check url
+
+        // Sned of ajax call
         $.ajax({
                 url: videoSearch,
                 method: "GET",
@@ -139,24 +146,20 @@ $(document).ready(function() {
                 dataType: 'jsonp'
             })
             .done(function(response) {
-         
-                var results = response.result;
-               //created for loop and set to only loop 4 times "i<4"
-               for (var i=0; i<4; i++) {
-                // videoId with response of i
+
+                // Log json obj
+                console.log(response);
+
+                //created for loop and set to only loop 4 times "i<4"
+                for (var i = 0; i < 4; i++) {
+                    // videoId with response of i
                     var videoId = response.items[i].id.videoId;
                     console.log(response.items[i]);
                     // loop appends videos together within the loop using ".append"
                     $('#popVids').append("<iframe width='250' height='250' src='https://www.youtube.com/embed/" + videoId + "' frameborder='0' allowfullscreen></iframe>");
-
-
                 }
-
-
             })
     };
-
-
 
     // Function to create user input form
     function userReviews() {
@@ -165,10 +168,10 @@ $(document).ready(function() {
         $('#formTitle').append("<h3>Submit Feedback</h3>")
 
         // Reviewer name
-        $('#reviewerName').append("<id='reviewerName' data-parsley-validate=><label for='Reviewers Name'>Name:</label><input type='text' class='form-control form-group' name='s' required='' data-parsley-palindrome=''>");
+        $('#reviewerName').append("<id='nameInput' data-parsley-validate=><label for='Reviewers Name'>Name:</label><input type='text' class='form-control form-group' name='s' required='' data-parsley-palindrome=''>");
 
         // Reviewer Comments
-        $('#reviewerComments').append("<id='reviewersComments' data-parsley-validate=><label for='Reviewers Comments'>Comments:</label><textarea type='text' class='form-control form-group' name='s' required='' data-parsley-palindrome=''>");
+        $('#reviewerComments').append("<id='commentsInput' data-parsley-validate=><label for='Reviewers Comments'>Comments:</label><textarea type='text' class='form-control form-group' name='s' required='' data-parsley-palindrome=''>");
 
         // Radio buttons to rate app
         $('#reviewerRating').append("<label for='appRating'><h3>Rating: </h3></label>");
@@ -212,10 +215,10 @@ $(document).ready(function() {
     // Function to initialize and send reviews to Firebase
     $('#reviewerSubmitBtn').click(function() {
 
-    	// Testing click submission
-    	console.log("testing click function");
-    	
-    	// Method to prevent form from running on its own
+        // Testing click submission
+        console.log("testing click function");
+
+        // Method to prevent form from running on its own
         event.preventDefault();
 
         // Initialize Firebase
@@ -238,7 +241,7 @@ $(document).ready(function() {
         reviewerRating = $('#reviewerRating').val().trim();
 
         // Log to check if input is retrieved properly
-        console.log(reviewerName, reviewerComments, reviewerRating);
+        console.log('reviewName',reviewerName, 'reviewerComments',reviewerComments, 'reviewRating',reviewerRating);
 
         // Push input data to firebase 
         database.ref().push({
