@@ -118,34 +118,33 @@ $(document).ready(function() {
 
     function youTubeApi() {
 
-        console.log(this)
+        
         var videos = $('#gameSearch').val().trim();
         // console.log(videos);
+        var baseURL = "https://www.googleapis.com/youtube/v3/";
+        
+        var apiKey = "AIzaSyD_owzmaKsqcncuux1E5mbgvPk3y7WrZF0";
 
-        var queryURL = "https://www.googleapis.com/youtube/v3/videos?key=AIzaSyD_owzmaKsqcncuux1E5mbgvPk3y7WrZF0&fields=items&part=snippet";
-
-        var apiInfo = {
-            id: '7lCDEYXw3mM',
-            regionCode: 'US',
-            part: 'snippet,contentDetails,statistics',
-            videoCategoryId: '20',
-            type: 'video',
-            q: videos,
-            maxResults: 3
-        };
+        var videoSearch = baseURL + "search?&q=" + videos + "&part=snippet&type=video&key=" + apiKey;
+        console.log(videoSearch);
 
         $.ajax({
-                url: queryURL,
+                url: videoSearch,
                 method: "GET",
-                data: apiInfo,
+                // maxResults: 4, 
                 dataType: 'jsonp'
             })
             .done(function(response) {
-                // console.log(response);
-                var results = response.data;
-                // $('#youTube')
+         
+                var results = response.result;
+               
+
+                var videoId = response.items[0].id.videoId;
+
+                $('#popVids').html("<iframe width='400' height='300' src='https://www.youtube.com/embed/" + videoId + "' frameborder='0' allowfullscreen></iframe>");
             })
     };
+
 
 
     // Function to create user input form
