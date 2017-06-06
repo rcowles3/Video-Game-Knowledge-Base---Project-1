@@ -28,11 +28,12 @@
 
 <body>
     <nav class="appName">
-        <a class="navbar navbar-brand" href="index.html">App Name/Logo</a>
+        <a class="navbar navbar-brand" href="index.html">Codex Gaming</a>
     </nav>
     <div class="container">
         <div class="jumbotron text-center">
-            <h1 id="siteTitle">Search Any Game!</h1>
+            <h1 id="siteTitle">Codex Gaming</h1>
+            <h2 id="siteSubTitle">Search for your favorite game!</h2>
             <div class="row">
                 <div>
                     <input id="gameSearch" type="text" class="form-control text-center" maxlength="50" placeholder="Ex: NBA 2k17">
@@ -59,15 +60,21 @@
         <!-- Markup for user review data -->
         <div class="userReviews"></div>
         <!-- Markup for user review form input -->
-        <div id="userInput"></div>      
+        <div id="userInput">
+            <div id="formTitle"></div>
+            <div id="reviewerName"></div>
+            <div id="reviewerComments"></div>
+            <div id="reviewerRating"></div>
+            <div id="reviewerSubmitBtn"></div>
+        </div>
         <br>
         <br>
         <br>
     </div>
     <footer class="footer">
-      <!-- <div class="container"> -->
+        <!-- <div class="container"> -->
         <p>All Rights Reserved. Images and information used for educational purposes.</p>
-      <!-- </div> -->
+        <!-- </div> -->
     </footer>
     <!-- Javascript to load after HTML -->
     <script src="assets/js/api.js" type="text/javascript"></script>

@@ -163,24 +163,24 @@ $(document).ready(function() {
     function userReviews() {
 
         // Title
-        $('#userInput').html("<h3>Submit Feedback</h3>")
+        $('#formTitle').append("<h3>Submit Feedback</h3>")
 
         // Reviewer name
-        $('#userInput').append("<id='reviewerName' data-parsley-validate=><label for='Reviewers Name'>Name:</label><input type='text' class='form-control form-group' name='s' required='' data-parsley-palindrome=''>");
+        $('#reviewerName').append("<id='reviewerName' data-parsley-validate=><label for='Reviewers Name'>Name:</label><input type='text' class='form-control form-group' name='s' required='' data-parsley-palindrome=''>");
 
         // Reviewer Comments
-        $('#userInput').append("<id='reviewersComments' data-parsley-validate=><label for='Reviewers Comments'>Comments:</label><textarea type='text' class='form-control form-group' name='s' required='' data-parsley-palindrome=''>");
+        $('#reviewerComments').append("<id='reviewersComments' data-parsley-validate=><label for='Reviewers Comments'>Comments:</label><textarea type='text' class='form-control form-group' name='s' required='' data-parsley-palindrome=''>");
 
         // Radio buttons to rate app
-        $('#userInput').append("<label for='appRating'><h3>Rating: </h3></label>");
-        $('#userInput').append("<div><label class='radio-inline reviewerRating'><input type='radio' name='appRating' value='1' required=''> 1 </label>" +
+        $('#reviewerRating').append("<label for='appRating'><h3>Rating: </h3></label>");
+        $('#reviewerRating').append("<div><label class='radio-inline reviewerRating'><input type='radio' name='appRating' value='1' required=''> 1 </label>" +
             "<label class='radio-inline reviewerRating'><input type='radio' name='appRating' value='2' required=''> 2 </label>" +
             "<label class='radio-inline reviewerRating'><input type='radio' name='appRating' value='3' required=''> 3 </label>" +
             "<label class='radio-inline reviewerRating'><input type='radio' name='appRating' value='4' required=''> 4 </label>" +
             "<label class='radio-inline reviewerRating'><input type='radio' name='appRating' value='5' required=''> 5 </label></div>");
 
         // Submit button
-        $('#userInput').append("<div><button id='userSubmit' type='submit' class='btn btn-default'>Submit</button></div>");
+        $('#reviewerSubmitBtn').append("<div><button id='userSubmit' type='submit' class='btn btn-default'>Submit</button></div>");
     }
 
     // FUNCTIONS TO HANDLE CLICK EVENTS
@@ -211,45 +211,44 @@ $(document).ready(function() {
     });
 
     // Function to initialize and send reviews to Firebase
-    $('button').click(function() {
+    $('#reviewerSubmitBtn').click(function() {
 
     	// Testing click submission
     	console.log("testing click function");
     	
     	// Method to prevent form from running on its own
-        // event.preventDefault();
+        event.preventDefault();
 
-        // // Initialize Firebase
-        // var config = {
-        //     apiKey: "AIzaSyAx1a2HO0Q7v7yk4JFHOVVLwNs8Pu6O8z0",
-        //     authDomain: "video-game-search-project.firebaseapp.com",
-        //     databaseURL: "https://video-game-search-project.firebaseio.com",
-        //     // projectId: "video-game-search-project",
-        //     storageBucket: "video-game-search-project.appspot.com",
-        //     // messagingSenderId: "299555008620"
-        // };
-        // firebase.initializeApp(config);
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyAx1a2HO0Q7v7yk4JFHOVVLwNs8Pu6O8z0",
+            authDomain: "video-game-search-project.firebaseapp.com",
+            databaseURL: "https://video-game-search-project.firebaseio.com",
+            // projectId: "video-game-search-project",
+            storageBucket: "video-game-search-project.appspot.com",
+            // messagingSenderId: "299555008620"
+        };
+        firebase.initializeApp(config);
 
-        // // Variable to reference firebase DB.
-        // var database = firebase.database();
+        // Variable to reference firebase DB.
+        var database = firebase.database();
 
-        // // Get input values from from
-        // reviewerName = $('#reviewerName').val().trim();
-        // reviewerComments = $('#reviewerComments').val().trim();
-        // reviewerRating = $('#reviewerRating').val().trim();
+        // Get input values from from
+        reviewerName = $('#reviewerName').val().trim();
+        reviewerComments = $('#reviewerComments').val().trim();
+        reviewerRating = $('#reviewerRating').val().trim();
 
-        // // Log to check if input is retrieved properly
-        // console.log(reviewerName, reviewerComments, reviewerRating);
+        // Log to check if input is retrieved properly
+        console.log(reviewerName, reviewerComments, reviewerRating);
 
-        // // Push input data to firebase 
-        // database.ref().push({
-        //     reviewerName: reviewerName,
-        //     reviewerComments: reviewerComments,
-        //     reviewerRating,
-        //     reviewerRating
-        // });
+        // Push input data to firebase 
+        database.ref().push({
+            reviewerName: reviewerName,
+            reviewerComments: reviewerComments,
+            reviewerRating: reviewerRating
+        });
 
-        // // Reset form after submit
+        // Reset form after submit
         // $('#userInput').get(0).reset();
     });
 
