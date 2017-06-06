@@ -9,8 +9,6 @@ body {
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;;
-    /* width: 100%,
-	height:100%,*/
 	color: white;
 }
 
@@ -22,6 +20,11 @@ h1 {
 .navbar-brand {
   color: white;
   position: fixed;
+  background-color: #000;
+  width: 100%;
+  padding: 30px;
+  line-height: 1px;
+  z-index: 999;
 }
 
 .jumbotron {
@@ -49,15 +52,8 @@ img {
 	margin: 5px;
 }
 
-#form-control {
-	margin-left: 15%;
-	margin-right: 15%;
-}
-
-.row {
-	margin-top: 10px;
-	margin-right: 5%;
-	margin-left: 5%;
+#userInput {
+	margin-right: 500px;
 }
 
 #gameDesc {
@@ -65,5 +61,16 @@ img {
 	height: 300px;
 }
 
-/* CSS for gameInfo.html */
+.form-group {
+	color: #000;
+}
 
+/*Footer Css*/
+footer {    
+    padding: 25px;
+    background-color: #000;
+    color: #fff;
+    border-top-style: solid;
+    text-align: center;
+    bottom: 0;
+}

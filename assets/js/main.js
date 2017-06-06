@@ -52,15 +52,10 @@ $(document).ready(function() {
                 // Variable to get url from JSON obj
                 var imageURL = data.results[0].image.medium_url;
 
-                // Variable to get game rating
-                var rating = data.results[0].original_game_rating[0].name;
+                // Checking whether game rating is null or not
+                var checkRating = data.results[0].original_game_rating;
 
-                // Variable for no game ratings
-                var noRating = data.results[0].original_game_rating;
-
-                console.log(data.results[0].original_game_rating);
-
-                var convertedRating = rating.slice(5, 7);
+                // console.log(data.results[0].original_game_rating);
 
                 // Variable to add image source
                 var image = $("<img class='text-center panel panel-default'>").attr("src", imageURL);
@@ -77,7 +72,7 @@ $(document).ready(function() {
                 // Link back to Giant Bomb page URL
                 var giantBombUrl = data.results[0].site_detail_url;
 
-                console.log(giantBombUrl);
+                // console.log(giantBombUrl);
 
                 var giantBombLink = $('<a>').attr('href', giantBombUrl).text("Link Back To GiantBomb.com");
 
@@ -93,9 +88,21 @@ $(document).ready(function() {
                 $('#gameTitle').html("<class='panel panel-default panel-heading'>" + objTitle);
 
                 // If else statment to check whether game rating is available for searched game
+                if (checkRating == null) {
 
-                // Manipulate rating to DOM
-                $('#gameRating').html("Rating: " + convertedRating);
+                    // Variable for no game ratings
+                    var rating = console.log("Sorry, game has no rating to display.");
+                } else {
+
+                    // Variable to get game rating
+                    var rating = data.results[0].original_game_rating[0].name;
+
+                    // Grab just rating from string
+                    var convertedRating = rating.slice(5, 7);
+
+                    // Manipulate rating to DOM
+                    $('#gameRating').html("Rating: " + convertedRating);
+                }
 
                 // Manipulate brief description to DOM
                 $('#briefDesc').html(briefDesc);
@@ -141,6 +148,30 @@ $(document).ready(function() {
     };
 
 
+    // Function to create user input form
+    function userReviews() {
+
+        // Title
+        $('#userInput').html("<h3>Submit Feedback</h3>")
+
+        // Reviewer name
+        $('#userInput').append("<id='reviewerName' data-parsley-validate=><label for='Reviewers Name'>Name:</label><input type='text' class='form-control form-group' name='s' required='' data-parsley-palindrome=''>");
+
+        // Reviewer Comments
+        $('#userInput').append("<id='reviewersComments' data-parsley-validate=><label for='Reviewers Comments'>Comments:</label><textarea type='text' class='form-control form-group' name='s' required='' data-parsley-palindrome=''>");
+
+        // Radio buttons to rate app
+        $('#userInput').append("<label for='appRating'><h3>Rating: </h3></label>");
+        $('#userInput').append("<div><label class='radio-inline'><input type='radio' name='appRating' id='1star' value='1' required=''> 1 </label>" +
+            "<label class='radio-inline'><input type='radio' name='appRating' id='1star' value='1' required=''> 2 </label>" +
+            "<label class='radio-inline'><input type='radio' name='appRating' id='1star' value='1' required=''> 3 </label>" +
+            "<label class='radio-inline'><input type='radio' name='appRating' id='1star' value='1' required=''> 4 </label>" +
+            "<label class='radio-inline'><input type='radio' name='appRating' id='1star' value='1' required=''> 5 </label></div>");
+
+        // Submit button
+        $('#userInput').append("<div><button type='submit' class='btn btn-default'>Submit</button></div></form>");
+    }
+
     // Function to handle click event off game searched
     $('#gameSearchBtn').click(function() {
 
@@ -157,8 +188,11 @@ $(document).ready(function() {
 
         // Call to YouTube API
         youTubeApi();
+
         // Call to Spotify API
 
-        // Create user form and append reveiws
+
+        // Call to create form on submission
+        userReviews();
     });
 });
