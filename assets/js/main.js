@@ -118,11 +118,9 @@ $(document).ready(function() {
 
     function youTubeApi() {
 
-        console.log(this)
         
         var videos = $('#gameSearch').val().trim();
         // console.log(videos);
-
         var baseURL = "https://www.googleapis.com/youtube/v3/";
         
         var apiKey = "AIzaSyD_owzmaKsqcncuux1E5mbgvPk3y7WrZF0";
@@ -131,15 +129,15 @@ $(document).ready(function() {
         console.log(videoSearch);
 
         $.ajax({
-                url: queryURL,
+                url: videoSearch,
                 method: "GET",
-                maxResults: 4, 
+                // maxResults: 4, 
                 dataType: 'jsonp'
             })
             .done(function(response) {
-                // console.log(response);
+         
                 var results = response.result;
-                console.log("video", response);
+               
 
                 var videoId = response.items[0].id.videoId;
 
