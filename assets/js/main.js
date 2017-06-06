@@ -6,6 +6,20 @@ $(document).ready(function() {
     // Log to test JS is working
     // console.log('Hi I am loaded');
 
+    // // Initialize Firebase
+    // var config = {
+    //     apiKey: "AIzaSyAx1a2HO0Q7v7yk4JFHOVVLwNs8Pu6O8z0",
+    //     authDomain: "video-game-search-project.firebaseapp.com",
+    //     databaseURL: "https://video-game-search-project.firebaseio.com",
+    //     // projectId: "video-game-search-project",
+    //     storageBucket: "video-game-search-project.appspot.com",
+    //     // messagingSenderId: "299555008620"
+    // };
+    // firebase.initializeApp(config);
+
+    // // Variable to reference firebase DB.
+    // var database = firebase.database();
+
     // // FUNCTIONS 
     // // ===============================================            
 
@@ -118,17 +132,29 @@ $(document).ready(function() {
 
     function youTubeApi() {
 
-        
+        // Variable to retrieve search input
         var videos = $('#gameSearch').val().trim();
-        // console.log(videos);
+
+        // console.log(videos); // Log to make sure correct
+
+        // Variable for baseUrl
         var baseURL = "https://www.googleapis.com/youtube/v3/";
-        
+
+        // Variable for API Key
         var apiKey = "AIzaSyD_owzmaKsqcncuux1E5mbgvPk3y7WrZF0";
 
+<<<<<<< HEAD
         var videoSearch = baseURL + "search?&q=" + videos + "&part=snippet&type=video&maxResults=4&key=" + apiKey;
         //video search parameters based of youtube api
         console.log(videoSearch);
+=======
+        // Video Search queryURL
+        var videoSearch = baseURL + "search?&q=" + videos + "&part=snippet&type=video&key=" + apiKey;
+>>>>>>> 77c3a6d9e305ba618f6e063399c0460566dec273
 
+        console.log(videoSearch); // Double check url
+
+        // Sned of ajax call
         $.ajax({
                 url: videoSearch,
                 method: "GET",
@@ -136,6 +162,7 @@ $(document).ready(function() {
                 dataType: 'jsonp'
             })
             .done(function(response) {
+<<<<<<< HEAD
          
                 var results = response.result;
                //created for loop and set to only loop 4 times "i<4"
@@ -149,10 +176,21 @@ $(document).ready(function() {
                 }
 
 
+=======
+
+                // Log json obj
+                console.log(response);
+
+                // Create var to grab vid id from for videos
+                var videoId = response.items[0].id.videoId;
+
+                // check vid id
+                console.log(videoId);
+
+                $('#popVids').html("<iframe width='400' height='300' src='https://www.youtube.com/embed/" + videoId + "' frameborder='0' allowfullscreen></iframe>");
+>>>>>>> 77c3a6d9e305ba618f6e063399c0460566dec273
             })
     };
-
-
 
     // Function to create user input form
     function userReviews() {
