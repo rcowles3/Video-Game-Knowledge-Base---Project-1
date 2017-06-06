@@ -125,7 +125,8 @@ $(document).ready(function() {
         
         var apiKey = "AIzaSyD_owzmaKsqcncuux1E5mbgvPk3y7WrZF0";
 
-        var videoSearch = baseURL + "search?&q=" + videos + "&part=snippet&type=video&key=" + apiKey;
+        var videoSearch = baseURL + "search?&q=" + videos + "&part=snippet&type=video&maxResults=4&key=" + apiKey;
+        //video search parameters based of youtube api
         console.log(videoSearch);
 
         $.ajax({
@@ -137,11 +138,17 @@ $(document).ready(function() {
             .done(function(response) {
          
                 var results = response.result;
-               
+               //created for loop and set to only loop 4 times "i<4"
+               for (var i=0; i<4; i++) {
+                // videoId with response of i
+                    var videoId = response.items[i].id.videoId;
+                    console.log(response.items[i]);
+                    // loop appends videos together within the loop using ".append"
+                    $('#popVids').append("<iframe width='250' height='250' src='https://www.youtube.com/embed/" + videoId + "' frameborder='0' allowfullscreen></iframe>");
 
-                var videoId = response.items[0].id.videoId;
+                }
 
-                $('#popVids').html("<iframe width='400' height='300' src='https://www.youtube.com/embed/" + videoId + "' frameborder='0' allowfullscreen></iframe>");
+
             })
     };
 
