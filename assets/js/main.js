@@ -121,23 +121,17 @@ $(document).ready(function() {
     // Function that run YouTube API logic
     function youTubeApi() {
 
-        // Variable to retrieve search input
+        
         var videos = $('#gameSearch').val().trim();
-
-        // console.log(videos); // Log to make sure correct
-
-        // Variable for baseUrl
+        // console.log(videos);
         var baseURL = "https://www.googleapis.com/youtube/v3/";
-
-        // Variable for API Key
+        
         var apiKey = "AIzaSyD_owzmaKsqcncuux1E5mbgvPk3y7WrZF0";
 
-        // Video Search queryURL
-        var videoSearch = baseURL + "search?&q=" + videos + "&part=snippet&type=video&key=" + apiKey;
+        var videoSearch = baseURL + "search?&q=" + videos + "&part=snippet&chart=mostPopular&videoCategoryId=20&type=video&maxResults=4&key=" + apiKey;
+        //video search parameters based of youtube api
+        console.log(videoSearch);
 
-        console.log(videoSearch); // Double check url
-
-        // Sned of ajax call
         $.ajax({
                 url: videoSearch,
                 method: "GET",
@@ -145,19 +139,24 @@ $(document).ready(function() {
                 dataType: 'jsonp'
             })
             .done(function(response) {
+         
+                var results = response.result;
+               //created for loop and set to only loop 4 times "i<4"
+               for (var i=0; i<4; i++) {
+                // videoId with response of i
+                    var videoId = response.items[i].id.videoId;
+                    console.log(response.items[i]);
+                    // loop appends videos together within the loop using ".append"
+                    $('#popVids').append("<iframe width='250' height='250' src='https://www.youtube.com/embed/" + videoId + "' frameborder='0' allowfullscreen></iframe>");
 
-                // Log json obj
-                console.log(response);
 
-                // Create var to grab vid id from for videos
-                var videoId = response.items[0].id.videoId;
+                }
 
-                // check vid id
-                console.log(videoId);
 
-                $('#popVids').html("<iframe width='400' height='300' src='https://www.youtube.com/embed/" + videoId + "' frameborder='0' allowfullscreen></iframe>");
             })
     };
+
+
 
     // Function to create user input form
     function userReviews() {
