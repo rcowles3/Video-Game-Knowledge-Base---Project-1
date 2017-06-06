@@ -6,19 +6,19 @@ $(document).ready(function() {
     // Log to test JS is working
     // console.log('Hi I am loaded');
 
-    // Initialize Firebase
-    var config = {
-        apiKey: "AIzaSyAx1a2HO0Q7v7yk4JFHOVVLwNs8Pu6O8z0",
-        authDomain: "video-game-search-project.firebaseapp.com",
-        databaseURL: "https://video-game-search-project.firebaseio.com",
-        // projectId: "video-game-search-project",
-        storageBucket: "video-game-search-project.appspot.com",
-        // messagingSenderId: "299555008620"
-    };
-    firebase.initializeApp(config);
+    // // Initialize Firebase
+    // var config = {
+    //     apiKey: "AIzaSyAx1a2HO0Q7v7yk4JFHOVVLwNs8Pu6O8z0",
+    //     authDomain: "video-game-search-project.firebaseapp.com",
+    //     databaseURL: "https://video-game-search-project.firebaseio.com",
+    //     // projectId: "video-game-search-project",
+    //     storageBucket: "video-game-search-project.appspot.com",
+    //     // messagingSenderId: "299555008620"
+    // };
+    // firebase.initializeApp(config);
 
-    // Variable to reference firebase DB.
-    var database = firebase.database();
+    // // Variable to reference firebase DB.
+    // var database = firebase.database();
 
     // // FUNCTIONS 
     // // ===============================================            
@@ -130,7 +130,45 @@ $(document).ready(function() {
             });
     };
 
- 
+    function youTubeApi() {
+
+        // Variable to retrieve search input
+        var videos = $('#gameSearch').val().trim();
+
+        // console.log(videos); // Log to make sure correct
+
+        // Variable for baseUrl
+        var baseURL = "https://www.googleapis.com/youtube/v3/";
+
+        // Variable for API Key
+        var apiKey = "AIzaSyD_owzmaKsqcncuux1E5mbgvPk3y7WrZF0";
+
+        // Video Search queryURL
+        var videoSearch = baseURL + "search?&q=" + videos + "&part=snippet&type=video&key=" + apiKey;
+
+        console.log(videoSearch); // Double check url
+
+        // Sned of ajax call
+        $.ajax({
+                url: videoSearch,
+                method: "GET",
+                // maxResults: 4, 
+                dataType: 'jsonp'
+            })
+            .done(function(response) {
+
+                // Log json obj
+                console.log(response);
+
+                // Create var to grab vid id from for videos
+                var videoId = response.items[0].id.videoId;
+
+                // check vid id
+                console.log(videoId);
+
+                $('#popVids').html("<iframe width='400' height='300' src='https://www.youtube.com/embed/" + videoId + "' frameborder='0' allowfullscreen></iframe>");
+            })
+    };
 
     // Function to create user input form
     function userReviews() {
