@@ -150,6 +150,9 @@ $(document).ready(function() {
                 // Log json obj
                 console.log(response);
 
+                // Title
+                $('#vidsTitle').append("<h3>Popular YouTube Videos</h3>");
+
                 //created for loop and set to only loop 4 times "i<4"
                 for (var i = 0; i < 4; i++) {
                     // videoId with response of i
@@ -165,25 +168,35 @@ $(document).ready(function() {
     function userReviews() {
 
         // Title
-        $('#formTitle').append("<h3>Submit Feedback</h3>")
+        $('#formTitle').append("<h3>Submit Feedback</h3>");
 
         // Reviewer name
-        $('#reviewerName').append("<id='nameInput' data-parsley-validate=><label for='Reviewers Name'>Name:</label><input type='text' class='form-control form-group' name='s' required='' data-parsley-palindrome=''>");
+        $('#reviewerName').append("<data-parsley-validate=><label for='Reviewers Name'>Name:</label><input id='nameInput' type='text' class='form-control form-group' name='s' required='' data-parsley-palindrome=''>");
 
         // Reviewer Comments
-        $('#reviewerComments').append("<id='commentsInput' data-parsley-validate=><label for='Reviewers Comments'>Comments:</label><textarea type='text' class='form-control form-group' name='s' required='' data-parsley-palindrome=''>");
+        $('#reviewerComments').append("<data-parsley-validate=><label for='Reviewers Comments'>Comments:</label><textarea id='commentsInput' type='text' class='form-control form-group' name='s' required='' data-parsley-palindrome=''>");
 
         // Radio buttons to rate app
         $('#reviewerRating').append("<label for='appRating'><h3>Rating: </h3></label>");
-        $('#reviewerRating').append("<div><label class='radio-inline reviewerRating'><input type='radio' name='appRating' value='1' required=''> 1 </label>" +
-            "<label class='radio-inline reviewerRating'><input type='radio' name='appRating' value='2' required=''> 2 </label>" +
-            "<label class='radio-inline reviewerRating'><input type='radio' name='appRating' value='3' required=''> 3 </label>" +
-            "<label class='radio-inline reviewerRating'><input type='radio' name='appRating' value='4' required=''> 4 </label>" +
-            "<label class='radio-inline reviewerRating'><input type='radio' name='appRating' value='5' required=''> 5 </label></div>");
+        $('#reviewerRating').append("<div><label class='radio-inline'><input class='reviewerRating' type='radio' name='appRating' value='1' required=''> 1 </label>" +
+            "<label class='radio-inline'><input class='reviewerRating'  type='radio' name='appRating' value='2' required=''> 2 </label>" +
+            "<label class='radio-inline'><input class='reviewerRating' type='radio' name='appRating' value='3' required=''> 3 </label>" +
+            "<label class='radio-inline'><input class='reviewerRating' type='radio' name='appRating' value='4' required=''> 4 </label>" +
+            "<label class='radio-inline'><input class='reviewerRating' type='radio' name='appRating' value='5' required=''> 5 </label></div>");
 
         // Submit button
         $('#reviewerSubmitBtn').append("<div><button id='userSubmit' type='submit' class='btn btn-default'>Submit</button></div>");
     }
+
+    // // Watcher function to check if values in firebase database has changed, if so, render html to page. 
+    // database.ref().on("child_added", function(snapshot) {
+
+    // 	// Render snapshot data to html
+    // 	$('#displayFormName').append(snapshot.val().reviewerName + "<br>");
+    //     $('#displayFormComments').append(snapshot.val().reviewerComments + "<br>");
+    //     $('#displayFormRating').append(snapshot.val().reviewerRating + "<br>");
+    // }
+
 
     // FUNCTIONS TO HANDLE CLICK EVENTS
     // ===============================================  
@@ -236,12 +249,12 @@ $(document).ready(function() {
         var database = firebase.database();
 
         // Get input values from from
-        reviewerName = $('#reviewerName').val().trim();
-        reviewerComments = $('#reviewerComments').val().trim();
-        reviewerRating = $('#reviewerRating').val().trim();
+        reviewerName = $('#nameInput').val().trim();
+        reviewerComments = $('#commentsInput').val().trim();
+        reviewerRating = $('.reviewerRating').val().trim();
 
         // Log to check if input is retrieved properly
-        console.log('reviewName',reviewerName, 'reviewerComments',reviewerComments, 'reviewRating',reviewerRating);
+        console.log('reviewName', reviewerName, 'reviewerComments', reviewerComments, 'reviewRating', reviewerRating);
 
         // Push input data to firebase 
         database.ref().push({
@@ -251,7 +264,17 @@ $(document).ready(function() {
         });
 
         // Reset form after submit
-        // $('#userInput').get(0).reset();
+        // $('#userInput').reset();
+
+        // Watcher function to check if values in firebase database has changed, if so, render html to page. 
+    database.ref().on("child_added", function(snapshot) {
+
+    	// Render snapshot data to html
+    	$('#displayFormName').append(snapshot.val().reviewerName + "<br>");
+        $('#displayFormComments').append(snapshot.val().reviewerComments + "<br>");
+        $('#displayFormRating').append(snapshot.val().reviewerRating + "<br>");
+    });
+
     });
 
 });
