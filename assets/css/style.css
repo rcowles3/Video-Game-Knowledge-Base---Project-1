@@ -53,7 +53,7 @@ img {
 }
 
 #userInput {
-	margin-right: 500px;
+	margin-right: 300px;
 }
 
 #gameDesc {
@@ -63,6 +63,10 @@ img {
 
 .form-group {
 	color: #000;
+}
+
+iframe {
+	margin: 5px;
 }
 
 /*Footer Css*/

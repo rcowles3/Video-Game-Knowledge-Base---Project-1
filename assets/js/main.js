@@ -6,6 +6,23 @@ $(document).ready(function() {
     // Log to test JS is working
     // console.log('Hi I am loaded');
 
+    // VARIABLES TO INITIALIZE FIREBASE
+    // ===============================================            
+
+    // Initialize Firebase
+    var config = {
+        apiKey: "AIzaSyAx1a2HO0Q7v7yk4JFHOVVLwNs8Pu6O8z0",
+        authDomain: "video-game-search-project.firebaseapp.com",
+        databaseURL: "https://video-game-search-project.firebaseio.com",
+        // projectId: "video-game-search-project",
+        storageBucket: "video-game-search-project.appspot.com",
+        // messagingSenderId: "299555008620"
+    };
+    firebase.initializeApp(config);
+
+    // Variable to reference firebase DB.
+    var database = firebase.database();
+
     // // FUNCTIONS 
     // // ===============================================            
 
@@ -46,7 +63,7 @@ $(document).ready(function() {
             .done(function(data) {
 
                 // Log of JSON object for referencing data
-                console.log(data);
+                // console.log(data);
 
                 // OBJECT VARIABLES 
                 // ===============================================
@@ -133,10 +150,9 @@ $(document).ready(function() {
         var apiKey = "AIzaSyD_owzmaKsqcncuux1E5mbgvPk3y7WrZF0";
 
         // Video Search queryURL
-        var videoSearch = baseURL + "search?&q=" + videos + "&part=snippet&chart=mostPopular&videoCategoryId=20&type=video&maxResults=4&key=" + apiKey;
+        var videoSearch = baseURL + "search?&q=" + videos + "&part=snippet&chart=mostPopular&videoCategoryId=20&type=video&maxResults=6&key=" + apiKey;
 
-
-        console.log(videoSearch); // Double check url
+        // console.log(videoSearch); // Double check url
 
         // Sned of ajax call
         $.ajax({
@@ -148,41 +164,61 @@ $(document).ready(function() {
             .done(function(response) {
 
                 // Log json obj
-                console.log(response);
+                // console.log(response);
+
+                // Title
+                $('#vidsTitle').append("<h3>Popular YouTube Videos</h3>");
 
                 //created for loop and set to only loop 4 times "i<4"
-                for (var i = 0; i < 4; i++) {
+                for (var i = 0; i < 6; i++) {
                     // videoId with response of i
                     var videoId = response.items[i].id.videoId;
-                    console.log(response.items[i]);
+                    // console.log(response.items[i]);
+
                     // loop appends videos together within the loop using ".append"
-                    $('#popVids').append("<iframe width='250' height='250' src='https://www.youtube.com/embed/" + videoId + "' frameborder='0' allowfullscreen></iframe>");
+                    $('#popVids').append("<iframe width='350' height='250' src='https://www.youtube.com/embed/" + videoId + "' frameborder='0' allowfullscreen></iframe>");
                 }
             })
     };
 
     // Function to create user input form
-    function userReviews() {
+    function createForm() {
 
         // Title
-        $('#formTitle').append("<h3>Submit Feedback</h3>")
+        $('#formTitle').append("<h3>Submit Feedback</h3>");
 
         // Reviewer name
-        $('#reviewerName').append("<id='nameInput' data-parsley-validate=><label for='Reviewers Name'>Name:</label><input type='text' class='form-control form-group' name='s' required='' data-parsley-palindrome=''>");
+        $('#reviewerName').append("<label for='Reviewers Name'>Name:</label><input id='nameInput' type='text' class='form-control form-group' name='s' required=''>");
 
         // Reviewer Comments
-        $('#reviewerComments').append("<id='commentsInput' data-parsley-validate=><label for='Reviewers Comments'>Comments:</label><textarea type='text' class='form-control form-group' name='s' required='' data-parsley-palindrome=''>");
+        $('#reviewerComments').append("<label for='Reviewers Comments'>Comments:</label><textarea id='commentsInput' type='text' class='form-control form-group' name='s' required=''>");
 
         // Radio buttons to rate app
         $('#reviewerRating').append("<label for='appRating'><h3>Rating: </h3></label>");
-        $('#reviewerRating').append("<div><label class='radio-inline reviewerRating'><input type='radio' name='appRating' value='1' required=''> 1 </label>" +
-            "<label class='radio-inline reviewerRating'><input type='radio' name='appRating' value='2' required=''> 2 </label>" +
-            "<label class='radio-inline reviewerRating'><input type='radio' name='appRating' value='3' required=''> 3 </label>" +
-            "<label class='radio-inline reviewerRating'><input type='radio' name='appRating' value='4' required=''> 4 </label>" +
-            "<label class='radio-inline reviewerRating'><input type='radio' name='appRating' value='5' required=''> 5 </label></div>");
+        $('#reviewerRating').append("<div><label class='radio-inline'><input class='reviewerRating' type='radio' name='appRating' value='1' required=''> 1 </label>" +
+            "<label class='radio-inline'><input class='reviewerRating'  type='radio' name='appRating' value='2' required=''> 2 </label>" +
+            "<label class='radio-inline'><input class='reviewerRating' type='radio' name='appRating' value='3' required=''> 3 </label>" +
+            "<label class='radio-inline'><input class='reviewerRating' type='radio' name='appRating' value='4' required=''> 4 </label>" +
+            "<label class='radio-inline'><input class='reviewerRating' type='radio' name='appRating' value='5' required=''> 5 </label></div>");
 
         // Submit button
         $('#reviewerSubmitBtn').append("<div><button id='userSubmit' type='submit' class='btn btn-default'>Submit</button></div>");
+    }
+
+    function displayReviews() {
+
+        database.ref().child('video-game-search-project').on("value", function(snapshot) {
+
+        	// variable 
+        	var data = snapshot.val();
+
+        	console.log(data);
+
+            // Render snapshot data to html
+            $('.userReviews').append("<label for='reviewName'><h4>" + data.reviewerName + "</h4></label>");
+            $('.userReviews').append("<label for='reviewerComments'><h5>" + data.reviewerComments + "</h5></label>");
+            $('.userReviews').append("<label for='reviewRating'><h5>Rating: " + data.reviewerRating + "</h5></label>");
+        });
     }
 
     // FUNCTIONS TO HANDLE CLICK EVENTS
@@ -194,10 +230,14 @@ $(document).ready(function() {
         // Hide on load content, on click
         // Hide index title
         $('#siteTitle').css("display", "none");
+        $('#siteSubTitle').css("display", "none");
         // Hide search button
         $('#gameSearchBtn').css("display", "none");
         // Hide search input
         $('#gameSearch').css("display", "none");
+
+        // Title
+        $('#displayReviewTitle').append("<h3>Recent Comments: </h3>");
 
         // Call to Giant Bomb API
         callGiantBombApi();
@@ -205,43 +245,29 @@ $(document).ready(function() {
         // Call to YouTube API
         youTubeApi();
 
-        // Call to Spotify API
-
+        // Call to display current reviews from firebase
+        displayReviews();
 
         // Call to create form on submission
-        userReviews();
+        createForm();
     });
 
     // Function to initialize and send reviews to Firebase
-    $('#reviewerSubmitBtn').click(function() {
+    $('#reviewerSubmitBtn').click(function(event) {
 
         // Testing click submission
-        console.log("testing click function");
+        // console.log("testing click function");
 
         // Method to prevent form from running on its own
         event.preventDefault();
 
-        // Initialize Firebase
-        var config = {
-            apiKey: "AIzaSyAx1a2HO0Q7v7yk4JFHOVVLwNs8Pu6O8z0",
-            authDomain: "video-game-search-project.firebaseapp.com",
-            databaseURL: "https://video-game-search-project.firebaseio.com",
-            // projectId: "video-game-search-project",
-            storageBucket: "video-game-search-project.appspot.com",
-            // messagingSenderId: "299555008620"
-        };
-        firebase.initializeApp(config);
-
-        // Variable to reference firebase DB.
-        var database = firebase.database();
-
         // Get input values from from
-        reviewerName = $('#reviewerName').val().trim();
-        reviewerComments = $('#reviewerComments').val().trim();
-        reviewerRating = $('#reviewerRating').val().trim();
+        reviewerName = $('#nameInput').val();
+        reviewerComments = $('#commentsInput').val();
+        reviewerRating = $('.reviewerRating:checked').val();
 
         // Log to check if input is retrieved properly
-        console.log('reviewName',reviewerName, 'reviewerComments',reviewerComments, 'reviewRating',reviewerRating);
+        // console.log('reviewName', reviewerName, 'reviewerComments', reviewerComments, 'reviewRating', reviewerRating);
 
         // Push input data to firebase 
         database.ref().push({
@@ -251,7 +277,16 @@ $(document).ready(function() {
         });
 
         // Reset form after submit
-        // $('#userInput').get(0).reset();
-    });
+        // $('#userInput').reset();
 
+        // Watcher function to check if values in firebase database has changed, if so, render html to page. 
+        database.ref().on("child_added", function(snapshot) {
+
+            // Render snapshot data to html
+            $('.userReviews').append("<label for='reviewName'><h4>" + snapshot.val().reviewerName + "</h4></label><br>");
+            $('.userReviews').append("<label for='reviewerComments'><h5>" + snapshot.val().reviewerComments + "</h5></label><br>");
+            $('.userReviews').append("<label for='reviewRating'><h5>Rating: " + snapshot.val().reviewerRating + "</h5></label><br>");
+        });
+
+    });
 });
