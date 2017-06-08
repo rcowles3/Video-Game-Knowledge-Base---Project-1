@@ -188,10 +188,10 @@ $(document).ready(function() {
         $('#formTitle').append("<h3>Submit Feedback</h3>");
 
         // Reviewer name
-        $('#reviewerName').append("<data-parsley-validate=><label for='Reviewers Name'>Name:</label><input id='nameInput' type='text' class='form-control form-group' name='s' required='' data-parsley-palindrome=''>");
+        $('#reviewerName').append("<label for='Reviewers Name'>Name:</label><input id='nameInput' type='text' class='form-control form-group' name='s' required=''>");
 
         // Reviewer Comments
-        $('#reviewerComments').append("<data-parsley-validate=><label for='Reviewers Comments'>Comments:</label><textarea id='commentsInput' type='text' class='form-control form-group' name='s' required='' data-parsley-palindrome=''>");
+        $('#reviewerComments').append("<label for='Reviewers Comments'>Comments:</label><textarea id='commentsInput' type='text' class='form-control form-group' name='s' required=''>");
 
         // Radio buttons to rate app
         $('#reviewerRating').append("<label for='appRating'><h3>Rating: </h3></label>");
@@ -207,12 +207,17 @@ $(document).ready(function() {
 
     function displayReviews() {
 
-        database.ref().on("value", function(snapshot) {
+        database.ref().child('video-game-search-project').on("value", function(snapshot) {
+
+        	// variable 
+        	var data = snapshot.val();
+
+        	console.log(data);
 
             // Render snapshot data to html
-            $('#displayFormName').append("<label for='reviewName'><h4>" + snapshot.val().reviewerName + "</h4></label>");
-            $('#displayFormComments').append("<label for='reviewerComments'><h5>" + snapshot.val().reviewerComments + "</h5></label>");
-            $('#displayFormRating').append("<label for='reviewRating'><h5>Rating: " + snapshot.val().reviewerRating + "</h5></label>");
+            $('.userReviews').append("<label for='reviewName'><h4>" + data.reviewerName + "</h4></label>");
+            $('.userReviews').append("<label for='reviewerComments'><h5>" + data.reviewerComments + "</h5></label>");
+            $('.userReviews').append("<label for='reviewRating'><h5>Rating: " + data.reviewerRating + "</h5></label>");
         });
     }
 
@@ -241,7 +246,7 @@ $(document).ready(function() {
         youTubeApi();
 
         // Call to display current reviews from firebase
-        // displayReviews();
+        displayReviews();
 
         // Call to create form on submission
         createForm();
@@ -278,9 +283,9 @@ $(document).ready(function() {
         database.ref().on("child_added", function(snapshot) {
 
             // Render snapshot data to html
-            $('#displayFormName').append("<label for='reviewName'><h4>" + snapshot.val().reviewerName + "</h4></label><br>");
-            $('#displayFormComments').append("<label for='reviewerComments'><h5>" + snapshot.val().reviewerComments + "</h5></label><br>");
-            $('#displayFormRating').append("<label for='reviewRating'><h5>Rating: " + snapshot.val().reviewerRating + "</h5></label><br>");
+            $('.userReviews').append("<label for='reviewName'><h4>" + snapshot.val().reviewerName + "</h4></label><br>");
+            $('.userReviews').append("<label for='reviewerComments'><h5>" + snapshot.val().reviewerComments + "</h5></label><br>");
+            $('.userReviews').append("<label for='reviewRating'><h5>Rating: " + snapshot.val().reviewerRating + "</h5></label><br>");
         });
 
     });
