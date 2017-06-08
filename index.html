@@ -54,16 +54,22 @@
         <div class="row" id="gameDesc"></div>
         <!-- Markup for Youtube API data -->
         <div id="vidsTitle"></div>
-        <div class="center-block" id="popVids"></div>
-        <!-- Markup for Spotify API data -->
-        <div id="spotifyPlaylist"></div>
+        <div id="popVids"></div>
         <!-- Markup for user review data -->
-        <div class="userReviews">
+        <table class="table userReviews">
+            <tbody>
+                <td id="displayReviewTitle"></td>
+                <td id="displayFormName"></td>
+                <td id="displayFormComments"></td>
+                <td id="displayFormRating"></td>
+            </tbody>
+        </table>
+        <!--  <div class="userReviews">
             <div id="displayReviewTitle"></div>
             <div id="displayFormName"></div>
             <div id="displayFormComments"></div>
             <div id="displayFormRating"></div>
-        </div>
+        </div> -->
         <!-- Markup for user review form input -->
         <div id="userInput">
             <div id="formTitle"></div>
@@ -75,18 +81,6 @@
         <br>
         <br>
         <br>
-        <div class="bs-callout bs-callout-warning hidden">
-            <h4>Oh snap!</h4>
-            <p>This form seems to be invalid :(</p>
-        </div>
-        <div class="bs-callout bs-callout-info hidden">
-            <h4>Yay!</h4>
-            <p>Everything seems to be ok :)</p>
-        </div>
-        <form>
-            <div id="formTitle"></div>
-            <div id="parsleyForm"></div>
-        </form>
     </div>
     <footer class="footer">
         <!-- <div class="container"> -->
