@@ -16,6 +16,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/parsley.js/1.1.16/parsley.min.js"></script>
     <!-- Stylesheet for custom css  -->
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+    <!--Animate.css CDN-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
     <!-- Psuedo Code  
         - Create html markup for both index and gameinfo
         - User will be given a search box to search for a video gams information.
@@ -31,9 +33,9 @@
         <a class="navbar navbar-brand" href="index.html">Codex Gaming</a>
     </nav>
     <div class="container">
-        <div class="jumbotron text-center">
+        <div class="animated fadeInUp jumbotron text-center">
             <h1 id="siteTitle">Codex Gaming</h1>
-            <h2 id="siteSubTitle">Search for your favorite game!</h2>
+            <h2 class="animated fadeIn" id="siteSubTitle">Search for your favorite game!</h2>
             <div class="row">
                 <div>
                     <input id="gameSearch" type="text" class="form-control text-center" maxlength="50" placeholder="Ex: NBA 2k17">
@@ -54,7 +56,7 @@
         <div class="row" id="gameDesc"></div>
         <!-- Markup for Youtube API data -->
         <div id="vidsTitle"></div>
-        <div class="center-block" id="popVids"></div>
+        <div class="animated bounceInRight center-block" id="popVids"></div>
         <!-- Markup for Spotify API data -->
         <div id="spotifyPlaylist"></div>
         <!-- Markup for user review data -->
@@ -67,10 +69,10 @@
         <!-- Markup for user review form input -->
         <div id="userInput">
             <div id="formTitle"></div>
-            <div id="reviewerName"></div>
-            <div id="reviewerComments"></div>
-            <div id="reviewerRating"></div>
-            <div id="reviewerSubmitBtn"></div>
+            <div  id="reviewerName"></div>
+            <div  id="reviewerComments"></div>
+            <div  id="reviewerRating"></div>
+            <div  id="reviewerSubmitBtn"></div>
         </div>
         <br>
         <br>
