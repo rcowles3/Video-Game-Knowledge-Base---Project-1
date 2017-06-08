@@ -188,16 +188,6 @@ $(document).ready(function() {
         $('#reviewerSubmitBtn').append("<div><button id='userSubmit' type='submit' class='btn btn-default'>Submit</button></div>");
     }
 
-    // // Watcher function to check if values in firebase database has changed, if so, render html to page. 
-    // database.ref().on("child_added", function(snapshot) {
-
-    // 	// Render snapshot data to html
-    // 	$('#displayFormName').append(snapshot.val().reviewerName + "<br>");
-    //     $('#displayFormComments').append(snapshot.val().reviewerComments + "<br>");
-    //     $('#displayFormRating').append(snapshot.val().reviewerRating + "<br>");
-    // }
-
-
     // FUNCTIONS TO HANDLE CLICK EVENTS
     // ===============================================  
 
@@ -207,6 +197,7 @@ $(document).ready(function() {
         // Hide on load content, on click
         // Hide index title
         $('#siteTitle').css("display", "none");
+        $('#siteSubTitle').css("display", "none");
         // Hide search button
         $('#gameSearchBtn').css("display", "none");
         // Hide search input
@@ -223,10 +214,24 @@ $(document).ready(function() {
 
         // Call to create form on submission
         userReviews();
+
+        // Parsley form testing
+        // parsleyForm();
     });
 
     // Function to initialize and send reviews to Firebase
-    $('#reviewerSubmitBtn').click(function() {
+    $('#reviewerSubmitBtn').click(function(event) {
+
+    	// $("#reviewerSubmitBtn").on('submit', function(e){
+     //        e.preventDefault();
+     //        var form = $(this);
+
+     //        form.parsley().validate();
+
+     //        if (form.parsley().isValid()){
+     //            alert('valid');
+     //        }
+     //    });
 
         // Testing click submission
         console.log("testing click function");
@@ -267,14 +272,44 @@ $(document).ready(function() {
         // $('#userInput').reset();
 
         // Watcher function to check if values in firebase database has changed, if so, render html to page. 
-    database.ref().on("child_added", function(snapshot) {
+        database.ref().on("child_added", function(snapshot) {
 
-    	// Render snapshot data to html
-    	$('#displayFormName').append(snapshot.val().reviewerName + "<br>");
-        $('#displayFormComments').append(snapshot.val().reviewerComments + "<br>");
-        $('#displayFormRating').append(snapshot.val().reviewerRating + "<br>");
+            // Render snapshot data to html
+            $('#displayFormName').append(snapshot.val().reviewerName);
+            $('#displayFormComments').append(snapshot.val().reviewerComments);
+            $('#displayFormRating').append(snapshot.val().reviewerRating + "<br>");
+        });
     });
 
-    });
+    function parsleyForm() {
+        // Title
+        $('#formTitle').append("<h3>Submit Feedback</h3>");
+        $('#parsleyForm').append("<id='appForm' data-parsley-validate=''>" +
+            "<label for='reviewerName'>Name * :</label>" +
+            "<input type='text' id='nameInput' class='form-control' name='reviewerName' required=''>");
+        $('#parsleyForm').append("<id='appForm' data-parsley-validate=''>" +
+            "<label for='reviewerComments'>Comments * :</label>" +
+            "<textarea type='text' id='commentsInput' class='form-control' name='reviewerComments' required=''>");
+        $('#parsleyForm').append("<id='appForm' data-parsley-validate=''>" +
+            "<label for='reviewerRating'>Rating * :</label><p>" +
+            " 1: <input type='radio' name=appRating class='reviewerRating' id='1star' value='1' required=''>" +
+            " 2: <input type='radio' name=appRating class='reviewerRating' id='2star' value='2' required=''>" +
+            " 3: <input type='radio' name=appRating class='reviewerRating' id='3star' value='3' required=''>" +
+            " 4: <input type='radio' name=appRating class='reviewerRating' id='4star' value='4' required=''>" +
+            " 5: <input type='radio' name=appRating class='reviewerRating' id='5star' value='5' required=''>");
+
+        $('#parsleyForm').append("<input type='submit' id='reviewerSubmitBtn' class='btn btn-default' value='Submit'>");
+
+        // $(function() {
+        //     $('#parsleyForm').parsley().on('field:validated', function() {
+        //             var ok = $('.parsley-error').length === 0;
+        //             $('.bs-callout-info').toggleClass('hidden', !ok);
+        //             $('.bs-callout-warning').toggleClass('hidden', ok);
+        //         })
+        //         .on('form:submit', function() {
+        //             return false; // Don't submit form for this demo
+        //         });
+        // });
+    }
 
 });
