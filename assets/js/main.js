@@ -210,9 +210,9 @@ $(document).ready(function() {
         database.ref().on("value", function(snapshot) {
 
             // Render snapshot data to html
-            $('#displayFormName').append("<th><label for='reviewName'><h4>" + snapshot.val().reviewerName + "</h4></label>");
-            $('#displayFormComments').append("<th><label for='reviewerComments'><h5>" + snapshot.val().reviewerComments + "</h5></label>");
-            $('#displayFormRating').append("<th><label for='reviewRating'><h5>Rating: " + snapshot.val().reviewerRating + "</h5></label>");
+            $('#displayFormName').append("<label for='reviewName'><h4>" + snapshot.val().reviewerName + "</h4></label>");
+            $('#displayFormComments').append("<label for='reviewerComments'><h5>" + snapshot.val().reviewerComments + "</h5></label>");
+            $('#displayFormRating').append("<label for='reviewRating'><h5>Rating: " + snapshot.val().reviewerRating + "</h5></label>");
         });
     }
 
@@ -231,6 +231,9 @@ $(document).ready(function() {
         // Hide search input
         $('#gameSearch').css("display", "none");
 
+        // Title
+        $('#displayReviewTitle').append("<h3>Recent Comments: </h3>");
+
         // Call to Giant Bomb API
         callGiantBombApi();
 
@@ -238,7 +241,7 @@ $(document).ready(function() {
         youTubeApi();
 
         // Call to display current reviews from firebase
-        displayReviews();
+        // displayReviews();
 
         // Call to create form on submission
         createForm();
