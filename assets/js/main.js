@@ -278,9 +278,9 @@ $(document).ready(function() {
         database.ref().on("child_added", function(snapshot) {
 
             // Render snapshot data to html
-            $('#displayFormName').append("<div><label for='reviewName'><h4>" + snapshot.val().reviewerName + "</h4></label>");
-            $('#displayFormComments').append("<div><label for='reviewerComments'><h5>" + snapshot.val().reviewerComments + "</h5></label>");
-            $('#displayFormRating').append("<div><label for='reviewRating'><h5>Rating: " + snapshot.val().reviewerRating + "</h5></label>");
+            $('#displayFormName').append("<label for='reviewName'><h4>" + snapshot.val().reviewerName + "</h4></label><br>");
+            $('#displayFormComments').append("<label for='reviewerComments'><h5>" + snapshot.val().reviewerComments + "</h5></label><br>");
+            $('#displayFormRating').append("<label for='reviewRating'><h5>Rating: " + snapshot.val().reviewerRating + "</h5></label><br>");
         });
 
     });
