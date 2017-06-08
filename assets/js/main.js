@@ -133,7 +133,7 @@ $(document).ready(function() {
         var apiKey = "AIzaSyD_owzmaKsqcncuux1E5mbgvPk3y7WrZF0";
 
         // Video Search queryURL
-        var videoSearch = baseURL + "search?&q=" + videos + "&part=snippet&chart=mostPopular&videoCategoryId=20&type=video&maxResults=4&key=" + apiKey;
+        var videoSearch = baseURL + "search?&q=" + videos + "&part=snippet&chart=mostPopular&videoCategoryId=20&type=video&maxResults=6&key=" + apiKey;
 
 
         console.log(videoSearch); // Double check url
@@ -154,12 +154,12 @@ $(document).ready(function() {
                 $('#vidsTitle').append("<h3>Popular YouTube Videos</h3>");
 
                 //created for loop and set to only loop 4 times "i<4"
-                for (var i = 0; i < 4; i++) {
+                for (var i = 0; i < 6; i++) {
                     // videoId with response of i
                     var videoId = response.items[i].id.videoId;
                     console.log(response.items[i]);
                     // loop appends videos together within the loop using ".append"
-                    $('#popVids').append("<iframe width='250' height='250' src='https://www.youtube.com/embed/" + videoId + "' frameborder='0' allowfullscreen></iframe>");
+                    $('#popVids').append("<iframe width='350' height='250' src='https://www.youtube.com/embed/" + videoId + "' frameborder='0' allowfullscreen></iframe>");
                 }
             })
     };
@@ -209,7 +209,8 @@ $(document).ready(function() {
         // Call to YouTube API
         youTubeApi();
 
-        // Call to Spotify API
+        // Call to display current reviews from firebase
+        
 
 
         // Call to create form on submission
@@ -256,7 +257,7 @@ $(document).ready(function() {
         // Get input values from from
         reviewerName = $('#nameInput').val().trim();
         reviewerComments = $('#commentsInput').val().trim();
-        reviewerRating = $('.reviewerRating').val().trim();
+        reviewerRating = $('.reviewerRating:checked').val().trim();
 
         // Log to check if input is retrieved properly
         console.log('reviewName', reviewerName, 'reviewerComments', reviewerComments, 'reviewRating', reviewerRating);
@@ -275,9 +276,9 @@ $(document).ready(function() {
         database.ref().on("child_added", function(snapshot) {
 
             // Render snapshot data to html
-            $('#displayFormName').append(snapshot.val().reviewerName);
-            $('#displayFormComments').append(snapshot.val().reviewerComments);
-            $('#displayFormRating').append(snapshot.val().reviewerRating + "<br>");
+            $('#displayFormName').append("<div><label for='reviewName'><h4>" + snapshot.val().reviewerName +"</h4></label>");
+            $('#displayFormComments').append("<div><label for='reviewerComments'><h5>" + snapshot.val().reviewerComments +"</h5></label>");
+            $('#displayFormRating').append("<div><label for='reviewRating'><h5>Rating: " + snapshot.val().reviewerRating +"</h5></label>");
         });
     });
 
