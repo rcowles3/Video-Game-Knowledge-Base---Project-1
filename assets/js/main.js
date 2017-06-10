@@ -36,7 +36,7 @@ $(document).ready(function() {
         var apikey = "4aa71062a0badcab727772a041b2d0acf478a829";
 
         // Base URL
-        var baseUrl = "http://www.giantbomb.com/api";
+        var baseUrl = "https://www.giantbomb.com/api";
 
         // Construct ajax url
         var GamesSearchUrl = baseUrl + '/search/?api_key=' + apikey + '&format=jsonp';
@@ -50,7 +50,7 @@ $(document).ready(function() {
         // If else to check if game is valid
 
         // var query = game;
-        // console.log(gameSearch);
+        console.log(gameSearch);
 
         // send off the query
         $.ajax({
@@ -167,7 +167,7 @@ $(document).ready(function() {
                 // console.log(response);
 
                 // Title
-                $('#vidsTitle').append("<h3>Popular YouTube Videos</h3>");
+                $('#vidsTitle').append("<h3>Popular YouTube Videos:</h3>");
 
                 //created for loop and set to only loop 4 times "i<4"
                 for (var i = 0; i < 6; i++) {
@@ -185,7 +185,7 @@ $(document).ready(function() {
     function createForm() {
 
         // Title
-        $('#formTitle').append("<h3>Submit Feedback</h3>");
+        $('#formTitle').append("<h3>Submit Feedback:</h3>");
 
         // Reviewer name
         $('#reviewerName').append("<label for='Reviewers Name'>Name:</label><input id='nameInput' type='text' class='form-control form-group' name='s' required=''>");
@@ -205,21 +205,21 @@ $(document).ready(function() {
         $('#reviewerSubmitBtn').append("<div><button id='userSubmit' type='submit' class='btn btn-default'>Submit</button></div>");
     }
 
-    function displayReviews() {
+    // function displayReviews() {
 
-        database.ref().child('video-game-search-project').on("value", function(snapshot) {
+    //     database.ref().child('video-game-search-project').on("value", function(snapshot) {
 
-        	// variable 
-        	var data = snapshot.val();
+    //     	// variable 
+    //     	var data = snapshot.val();
 
-        	console.log(data);
+    //     	console.log(data);
 
-            // Render snapshot data to html
-            $('.userReviews').append("<label for='reviewName'><h4>" + data.reviewerName + "</h4></label>");
-            $('.userReviews').append("<label for='reviewerComments'><h5>" + data.reviewerComments + "</h5></label>");
-            $('.userReviews').append("<label for='reviewRating'><h5>Rating: " + data.reviewerRating + "</h5></label>");
-        });
-    }
+    //         // Render snapshot data to html
+    //         $('.userReviews').append("<label for='reviewName'><h4>" + data.reviewerName + "</h4></label>");
+    //         $('.userReviews').append("<label for='reviewerComments'><h5>" + data.reviewerComments + "</h5></label>");
+    //         $('.userReviews').append("<label for='reviewRating'><h5>Rating: " + data.reviewerRating + "</h5></label>");
+    //     });
+    // }
 
     // FUNCTIONS TO HANDLE CLICK EVENTS
     // ===============================================  
@@ -246,7 +246,7 @@ $(document).ready(function() {
         youTubeApi();
 
         // Call to display current reviews from firebase
-        displayReviews();
+        // displayReviews();
 
         // Call to create form on submission
         createForm();
@@ -285,7 +285,7 @@ $(document).ready(function() {
             // Render snapshot data to html
             $('.userReviews').append("<label for='reviewName'><h4>" + snapshot.val().reviewerName + "</h4></label><br>");
             $('.userReviews').append("<label for='reviewerComments'><h5>" + snapshot.val().reviewerComments + "</h5></label><br>");
-            $('.userReviews').append("<label for='reviewRating'><h5>Rating: " + snapshot.val().reviewerRating + "</h5></label><br>");
+            $('.userReviews').append("<label for='reviewRating'><h5>Rating: " + snapshot.val().reviewerRating + "</h5></label><br><hr>");
         });
 
     });
