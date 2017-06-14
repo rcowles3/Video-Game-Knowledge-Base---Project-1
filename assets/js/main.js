@@ -203,6 +203,8 @@ $(document).ready(function() {
 
         // Submit button
         $('#reviewerSubmitBtn').append("<div><button id='userSubmit' type='submit' class='btn btn-default'>Submit</button></div>");
+
+
     }
 
     // function displayReviews() {
@@ -277,7 +279,10 @@ $(document).ready(function() {
         });
 
         // Reset form after submit
-        // $('#userInput').reset();
+        $('input').val("");
+        $('textarea').val("");
+        $(':checked').removeAttr("checked");
+
 
         // Watcher function to check if values in firebase database has changed, if so, render html to page. 
         database.ref().on("child_added", function(snapshot) {
