@@ -207,21 +207,39 @@ $(document).ready(function() {
 
     }
 
-    // function displayReviews() {
+    function displayReviews() {
 
-    //     database.ref().child('video-game-search-project').on("value", function(snapshot) {
+        database.ref().on("value", function(snapshot) {
 
-    //     	// variable 
-    //     	var data = snapshot.val();
+        	// variables for jsonobject
+        	var data = snapshot.val();
 
-    //     	console.log(data);
+            // ref firebase childs, appFeedback
+            var feedback = data.appFeedback;
+        	console.log(feedback); // testing 
 
-    //         // Render snapshot data to html
-    //         $('.userReviews').append("<label for='reviewName'><h4>" + data.reviewerName + "</h4></label>");
-    //         $('.userReviews').append("<label for='reviewerComments'><h5>" + data.reviewerComments + "</h5></label>");
-    //         $('.userReviews').append("<label for='reviewRating'><h5>Rating: " + data.reviewerRating + "</h5></label>");
-    //     });
-    // }
+            // For loop to run through comments in json obj to render to page
+            
+            // Render snapshot data to html
+            $('.userReviews').append("<label for='reviewName'><h4>" + feedback.reviewerName + "</h4></label><br>");
+            $('.userReviews').append("<label for='reviewerComments'><h5>" + feedback.reviewerComments + "</h5></label><br>");
+            $('.userReviews').append("<label for='reviewRating'><h5>Rating: " + feedback.reviewerRating + "</h5></label><br><hr>");
+        });
+    }
+
+    function feedbackToFirebase(){
+
+        // Var
+        var ref = database.ref();
+        // Watcher function to check if values in firebase database has changed, if so, render html to page. 
+        ref.limitToLast(1).on("child_added", function(formSubmit) {
+
+            // Render formSubmit data to html
+            $('.userReviews').append("<label for='reviewName'><h4>" + formSubmit.val().reviewerName + "</h4></label><br>");
+            $('.userReviews').append("<label for='reviewerComments'><h5>" + formSubmit.val().reviewerComments + "</h5></label><br>");
+            $('.userReviews').append("<label for='reviewRating'><h5>Rating: " + formSubmit.val().reviewerRating + "</h5></label><br><hr>");
+        });
+    }
 
     // FUNCTIONS TO HANDLE CLICK EVENTS
     // ===============================================  
@@ -248,7 +266,7 @@ $(document).ready(function() {
         youTubeApi();
 
         // Call to display current reviews from firebase
-        // displayReviews();
+        displayReviews();
 
         // Call to create form on submission
         createForm();
@@ -272,7 +290,7 @@ $(document).ready(function() {
         // console.log('reviewName', reviewerName, 'reviewerComments', reviewerComments, 'reviewRating', reviewerRating);
 
         // Push input data to firebase 
-        database.ref().push({
+        database.ref('appFeedback').push({
             reviewerName: reviewerName,
             reviewerComments: reviewerComments,
             reviewerRating: reviewerRating
@@ -281,17 +299,20 @@ $(document).ready(function() {
         // Reset form after submit
         $('input').val("");
         $('textarea').val("");
-        $(':checked').removeAttr("checked");
+        // $('.reviewRating').prop("checked", false);
+
+        // Function to send data back to firebase on submission
+        feedbackToFirebase();
 
 
-        // Watcher function to check if values in firebase database has changed, if so, render html to page. 
-        database.ref().on("child_added", function(snapshot) {
+        // // Watcher function to check if values in firebase database has changed, if so, render html to page. 
+        // database.ref().on("child_added", function(snapshot) {
 
-            // Render snapshot data to html
-            $('.userReviews').append("<label for='reviewName'><h4>" + snapshot.val().reviewerName + "</h4></label><br>");
-            $('.userReviews').append("<label for='reviewerComments'><h5>" + snapshot.val().reviewerComments + "</h5></label><br>");
-            $('.userReviews').append("<label for='reviewRating'><h5>Rating: " + snapshot.val().reviewerRating + "</h5></label><br><hr>");
-        });
+        //     // Render snapshot data to html
+        //     $('.userReviews').append("<label for='reviewName'><h4>" + snapshot.val().reviewerName + "</h4></label><br>");
+        //     $('.userReviews').append("<label for='reviewerComments'><h5>" + snapshot.val().reviewerComments + "</h5></label><br>");
+        //     $('.userReviews').append("<label for='reviewRating'><h5>Rating: " + snapshot.val().reviewerRating + "</h5></label><br><hr>");
+        // });
 
     });
 });
